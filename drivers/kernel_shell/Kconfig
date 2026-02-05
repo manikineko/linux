@@ -1,0 +1,128 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config KERNEL_SHELL_LUA_MODULE
+	tristate "Kernel Shell Lua Scripting Module (Demo)"
+	depends on KERNEL_SHELL_LUA
+	depends on MODULES
+	help
+	  This option enables the Lua scripting module for the kernel shell.
+	  The module provides Lua scripting capabilities that can be used
+	  during panic conditions for advanced debugging and recovery.
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called kernel_shell_lua.
+
+	  If unsure, say N.
+
+config KERNEL_SHELL_LUA_REAL_MODULE
+	tristate "Kernel Shell Real Lua Scripting Module"
+	depends on KERNEL_SHELL_LUA
+	depends on MODULES
+	select LUA_LIB
+	help
+	  This option enables the real Lua scripting module for the kernel shell.
+	  The module integrates actual Lua 5.5.0 interpreter for full Lua
+	  scripting capabilities during panic conditions.
+
+	  This provides complete Lua language support including:
+	  - Full Lua interpreter with standard libraries
+	  - Kernel-specific API functions
+	  - Real script execution with proper error handling
+	  - Memory management for kernel space
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called kernel_shell_lua_real.
+
+	  This requires the Lua source code to be available.
+
+	  If unsure, say N.
+
+config KERNEL_SHELL_NODEJS_MODULE
+	tristate "Kernel Shell Node.js Scripting Module (Demo)"
+	depends on KERNEL_SHELL_NODEJS
+	depends on MODULES
+	help
+	  This option enables the Node.js scripting module for the kernel shell.
+	  The module provides JavaScript scripting capabilities that can be used
+	  during panic conditions for advanced debugging and recovery.
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called kernel_shell_nodejs.
+
+	  If unsure, say N.
+
+config KERNEL_SHELL_NODEJS_REAL_MODULE
+	tristate "Kernel Shell Real Node.js Scripting Module (QuickJS)"
+	depends on KERNEL_SHELL_NODEJS
+	depends on MODULES
+	select QUICKJS
+	help
+	  This option enables the real Node.js scripting module for the kernel shell.
+	  The module integrates QuickJS JavaScript engine for full JavaScript/Node.js
+	  scripting capabilities during panic conditions.
+
+	  This provides complete JavaScript language support including:
+	  - ES2020 compliant JavaScript engine
+	  - Node.js-like console object
+	  - Kernel-specific API functions
+	  - Real script execution with proper error handling
+	  - Memory management for kernel space
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called kernel_shell_nodejs_real.
+
+	  This requires the QuickJS source code to be available.
+
+	  If unsure, say N.
+
+config LUA_LIB
+	bool
+	help
+	  This option is selected by modules that need Lua library support.
+
+config QUICKJS
+	bool
+	help
+	  This option is selected by modules that need QuickJS JavaScript engine.
+
+config EXAMPLE_SCRIPTABLE_MODULE
+	tristate "Example Scriptable Module"
+	depends on KERNEL_SHELL_SCRIPTING
+	depends on MODULES
+	help
+	  This option builds an example module that demonstrates how to make
+	  kernel modules scriptable using the kernel shell scripting interface.
+
+	  The module provides:
+	  - Custom scripting commands (increment, decrement, set_message, get_info)
+	  - Standard scripting operations (init, exit, suspend, resume, config, status, debug)
+	  - Proc file interface for monitoring
+	  - Example of Lua and JavaScript integration
+
+	  This is primarily for demonstration and testing purposes.
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called example_scriptable_module.
+
+	  If unsure, say N.
+
+config KERNEL_SHELL_TEST_MODULE
+	tristate "Kernel Shell Test Module"
+	depends on KERNEL_SHELL
+	depends on MODULES
+	help
+	  This option builds a test module for the kernel shell that provides
+	  testing commands and utilities for verifying shell functionality.
+
+	  The module provides:
+	  - test_input: Test input handling in kernel shell
+	  - test_kbd: Test direct keyboard input access
+	  - test_panic: Trigger a test panic to activate kernel shell
+
+	  This is useful for testing and debugging the kernel shell functionality,
+	  especially the new graphical PTY interface and keyboard input handling.
+
+	  To compile this driver as a module, choose M here: the module will be
+	  called kernel_shell_test.
+
+	  If unsure, say N.
